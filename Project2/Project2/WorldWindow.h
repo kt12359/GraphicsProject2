@@ -14,7 +14,10 @@
 #include <Fl/Fl.h>
 #include <Fl/Fl_Gl_Window.h>
 #include "Ground.h"
-#include "Track.h"
+#include "Track.h" //comment these out later and generalize to make code more maintainable
+#include "Tree.h"
+#include "Building.h"
+#include "FerrisWheel.h"
 
 
 // Subclass the Fl_Gl_Window because we want to draw OpenGL in here.
@@ -37,6 +40,9 @@ class WorldWindow : public Fl_Gl_Window {
     private:
 	Ground	    ground;	    // The ground object.
 	Track  traintrack;	    // The train and track.
+	Tree treeObj;			// Tree object
+	Building buildobj;		// Building object
+	FerrisWheel ferrisWheelObj;
 
 	static const double FOV_X; // The horizontal field of view.
 

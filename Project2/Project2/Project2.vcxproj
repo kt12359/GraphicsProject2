@@ -99,8 +99,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="CubicBspline.cpp" />
-    <ClCompile Include="FirstCube.cpp" />
+    <ClCompile Include="FerrisWheel.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="GenericException.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="libtarga.c" />
@@ -109,10 +111,13 @@
     <ClCompile Include="WorldWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Building.h" />
     <ClInclude Include="CubicBspline.h" />
-    <ClInclude Include="FirstCube.h" />
+    <ClInclude Include="FerrisWheel.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="GenericException.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="libtarga.h" />
     <ClInclude Include="Track.h" />
     <ClInclude Include="WorldWindow.h" />

@@ -76,7 +76,7 @@ WorldWindow::draw(void)
 	fov_y = 360.0f / M_PI * atan(h() * tan(FOV_X * M_PI / 360.0) / w());
 	gluPerspective(fov_y, w() / (float)h(), 1.0, 1000.0);
 
-	// Do some light stuff. Diffuse color, and zero specular color
+	// Do some light stuff. Diffuse  color, and zero specular color
 	// turns off specular lighting.
 	color[0] = 1.0f; color[1] = 1.0f; color[2] = 1.0f; color[3] = 1.0f;
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, color);
@@ -86,6 +86,10 @@ WorldWindow::draw(void)
 	// Initialize all the objects.
 	ground.Initialize();
 	traintrack.Initialize();
+	treeObj.Initialize();
+	//bool worked = buildobj.Initialize(); //TODO: need some  info if it worked, not if it didn't
+	ferrisWheelObj.Initialize();
+	
     }
 
     // Stuff out here relies on a coordinate system or must be done on every
@@ -113,6 +117,9 @@ WorldWindow::draw(void)
     // Draw stuff. Everything.
     ground.Draw();
     traintrack.Draw();
+	treeObj.Draw();
+	//buildobj.Draw();
+	ferrisWheelObj.Draw();
 }
 
 
