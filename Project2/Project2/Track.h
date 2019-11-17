@@ -14,7 +14,8 @@
 class Track {
   private:
     GLubyte 	    track_list;	    // The display list for the track.
-    GLubyte 	    train_list;	    // The display list for the train.
+    GLubyte 	    train_list[10];	    // The display list for the train.
+	GLuint			index; //added this, and changed to array instead of single list
     bool    	    initialized;    // Whether or not we have been initialized.
     CubicBspline    *track;	    // The spline that defines the track.
     float	    posn_on_track;  // The train's parametric position on the

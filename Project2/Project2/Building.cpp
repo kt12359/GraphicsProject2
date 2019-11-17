@@ -8,6 +8,7 @@ Building::Initialize(void)
 {
     ubyte   *image_data;
     int	    image_height, image_width;
+	float buildingHeight, buildingWidth;
 
     // Load the image for the texture.
     if ( ! ( image_data = (ubyte*)tga_load("buildingimg.tga", &image_width,
@@ -30,13 +31,11 @@ Building::Initialize(void)
     // mipmaps from the image data, then it sets the filtering parameters
     // and the wrapping parameters. We want the grass to be repeated over the
     // ground.
-    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, 
-		      GL_RGB, GL_UNSIGNED_BYTE, image_data);
+    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, GL_RGB, GL_UNSIGNED_BYTE, image_data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		    GL_NEAREST_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 
     // This says what to do with the texture. Modulate will multiply the
     // texture by the underlying color.
@@ -53,56 +52,66 @@ Building::Initialize(void)
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture_obj);
 
+	buildingHeight = 12.0;
+	buildingWidth = 3.0;
 	//FRONT
 glBegin(GL_POLYGON);
 
-glNormal3f(0.0, 1.0, 0.0);
-glTexCoord2f(4.0, 4.0);
-glVertex3f( -2.0, -2.0, -4.0);
-glVertex3f( -2.0,  2.0, -4.0);
-glVertex3f(  2.0,  2.0, -4.0);
-glVertex3f(  2.0, -2.0, -4.0); 
+//glNormal3f(0.0, 1.0, 0.0);
+glTexCoord3f(-buildingWidth, buildingWidth, -buildingHeight);
+glVertex3f( -buildingWidth, -buildingWidth, -buildingHeight);
+glVertex3f( -buildingWidth,  buildingWidth, -buildingHeight);
+glVertex3f(  buildingWidth,  buildingWidth, -buildingHeight);
+glVertex3f(  buildingWidth, -buildingWidth, -buildingHeight); 
 
 glEnd();
 
-	// White side - BACK
+	//BACK
 glBegin(GL_POLYGON);
-glNormal3f(0.0, -1.0, 0.0);
-glTexCoord2f(-4.0, -4.0);
-glVertex3f(  2.0, -2.0, 4.0 );
-glVertex3f(  2.0,  2.0, 4.0 );
-glVertex3f( -2.0,  2.0, 4.0 );
-glVertex3f( -2.0, -2.0, 4.0 );
+//glNormal3f(0.0, -1.0, 0.0);
+glTexCoord3f(-buildingWidth, -buildingWidth, buildingHeight);
+glVertex3f(  buildingWidth, -buildingWidth, buildingHeight );
+glVertex3f(  buildingWidth,  buildingWidth, buildingHeight );
+glVertex3f( -buildingWidth,  buildingWidth, buildingHeight );
+glVertex3f( -buildingWidth, -buildingWidth, buildingHeight );
 glEnd();
 
-// Purple side - RIGHT
+//RIGHT
 glBegin(GL_POLYGON);
-glNormal3f(-1.0, 0.0, 0.0);
-glTexCoord2f(-4.0, 4.0);
-glVertex3f( 2.0, -2.0, -4.0 );
-glVertex3f( 2.0,  2.0, -4.0 );
-glVertex3f( 2.0,  2.0,  4.0 );
-glVertex3f( 2.0, -2.0,  4.0 );
+//glNormal3f(-1.0, 0.0, 0.0);
+glTexCoord3f(-buildingWidth, buildingWidth, -buildingHeight);
+glVertex3f( buildingWidth, -buildingWidth, -buildingHeight );
+glVertex3f( buildingWidth,  buildingWidth, -buildingHeight );
+glVertex3f( buildingWidth,  buildingWidth,  buildingHeight );
+glVertex3f( buildingWidth, -buildingWidth,  buildingHeight );
 glEnd();
 
-// Green side - LEFT
+//LEFT
 glBegin(GL_POLYGON);
-glNormal3f(1.0, 0.0, 0.0);
-glTexCoord2f(4.0, -4.0);
-glVertex3f( -2.0, -2.0,  4.0 );
-glVertex3f( -2.0,  2.0,  4.0);
-glVertex3f( -2.0,  2.0, -4.0 );
-glVertex3f( -2.0, -2.0, -4.0 );
+//glNormal3f(1.0, 0.0, 0.0);
+glTexCoord3f(buildingWidth, -buildingWidth,  buildingHeight);
+glVertex3f( -buildingWidth, -buildingWidth,  buildingHeight );
+glVertex3f( -buildingWidth,  buildingWidth,  buildingHeight);
+glVertex3f( -buildingWidth,  buildingWidth, -buildingHeight );
+glVertex3f( -buildingWidth, -buildingWidth, -buildingHeight );
 glEnd();
 
-// Blue side - TOP
+//TOP
 glBegin(GL_POLYGON);
-glNormal3f(0.0, 0.0, 1.0);
-glTexCoord2f(4.0, 4.0);
-glVertex3f(  2.0,  2.0,  4.0 );
-glVertex3f(  2.0,  2.0, -4.0 );
-glVertex3f( -2.0,  2.0, -4.0 );
-glVertex3f( -2.0,  2.0,  4.0 );
+//glNormal3f(0.0, 0.0, 1.0);
+glTexCoord3f(buildingWidth, buildingWidth,   buildingHeight);
+glVertex3f(  buildingWidth,  buildingWidth,  buildingHeight );
+glVertex3f(  buildingWidth,  buildingWidth, -buildingHeight );
+glVertex3f( -buildingWidth,  buildingWidth, -buildingHeight );
+glVertex3f( -buildingWidth,  buildingWidth,  buildingHeight );
+glEnd();
+
+glBegin(GL_POLYGON);
+glTexCoord3f(buildingWidth, buildingWidth,   buildingHeight);
+glVertex3f(  buildingWidth, -buildingWidth, -buildingHeight );
+glVertex3f(  buildingWidth, -buildingWidth,  buildingHeight );
+glVertex3f( -buildingWidth, -buildingWidth,  buildingHeight );
+glVertex3f( -buildingWidth, -buildingWidth, -buildingHeight );
 glEnd();
 
 	// Turn texturing off again, because we don't want everything else to
@@ -122,6 +131,7 @@ void
 Building::Draw(void)
 {
     glPushMatrix();
+	glTranslatef(10.0,0,10.0);
     glCallList(display_list);
     glPopMatrix();
 }

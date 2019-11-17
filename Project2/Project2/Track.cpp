@@ -41,7 +41,9 @@ Track::~Track(void)
     if ( initialized )
     {
 	glDeleteLists(track_list, 1);
-	glDeleteLists(train_list, 1);
+	for(int i = 0; i < 10; ++i){
+	glDeleteLists(train_list[i], 1);
+	}
     }
 }
 
@@ -84,8 +86,12 @@ Track::Initialize(void)
     // Set up the train. At this point a cube is drawn. NOTE: The
     // x-axis will be aligned to point along the track. The origin of the
     // train is assumed to be at the bottom of the train.
-    train_list = glGenLists(1);
-    glNewList(train_list, GL_COMPILE);
+    //train_list = glGenLists(1);
+   // glNewList(train_list, GL_COMPILE);
+	index = glGenLists(1);
+	for(int i = 0; i < 10; ++i)
+	{
+	glNewList(index+i, GL_COMPILE);
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_QUADS);
 	glNormal3f(0.0f, 0.0f, 1.0f);
@@ -125,6 +131,10 @@ Track::Initialize(void)
 	glVertex3f(-0.5f, -0.5f, 0.0f);
     glEnd();
     glEndList();
+	}
+	for(int i = 0; i < 10; ++i){
+		train_list[i] = index + i;
+	}
 
     initialized = true;
 
@@ -169,7 +179,9 @@ Track::Draw(void)
     glRotatef((float)angle, 0.0f, 1.0f, 0.0f);
 
     // Draw the train
-    glCallList(train_list);
+			for(int i = 0; i < 10; ++i){
+    glCallList(train_list[i]);
+	}
 
     glPopMatrix();
     glPopMatrix();
