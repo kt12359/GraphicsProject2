@@ -25,9 +25,9 @@ void Tree::Draw()
 		glTranslatef(-35.0,-42.0+ychange,0.0);
 		trunkObj.Draw(i);
 		if(i%2 == 0)
-			glTranslatef(0.0,0.0,4.0);		//shift up so that tree trunk is not covered
+			glTranslatef(0.0,0.0,3.5);		//shift up so that tree trunk is not covered
 		else
-			glTranslatef(0.0,0.0,4.0*1.2);
+			glTranslatef(0.0,0.0,3.5*1.2);
 		leavesObj.Draw(i);
 		ychange += 6.0;
 		glPopMatrix();
