@@ -8,6 +8,7 @@ public:
 	void Initialize();
 	void Draw();
 private:
+	//GLubyte seatList[12];
 	GLubyte seatList;
 };
 
@@ -28,7 +29,7 @@ public:
 	//Spokes();
 	//~Spokes();
 	void Initialize();
-	void Draw(Seat & obj);
+	void Draw();
 private:
 	GLubyte spokesList;
 };
@@ -38,7 +39,8 @@ public:
 	void Initialize();
 	void Draw();
 private:
-	Seat seat;
 	Spokes spokes;
 	Stand stand;
+	Seat seat;
+	float prev;
 };
