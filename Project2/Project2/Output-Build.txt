@@ -1,0 +1,4 @@
+﻿1>------ Build started: Project: Project2, Configuration: Debug Win32 ------
+1>  Building.cpp
+1>  Project2.vcxproj -> C:\Users\kt\Downloads\Project2\Project2\Debug\Project2.exe
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

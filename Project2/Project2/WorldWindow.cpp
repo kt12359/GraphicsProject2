@@ -87,8 +87,10 @@ WorldWindow::draw(void)
 	ground.Initialize();
 	traintrack.Initialize();
 	treeObj.Initialize();
-	//bool worked = buildobj.Initialize(); //TODO: need some  info if it worked, not if it didn't
+	bool worked = buildobj.Initialize(); //TODO: need some  info if it worked, not if it didn't
 	ferrisWheelObj.Initialize();
+	fence.Initialize();
+
 	
     }
 
@@ -118,8 +120,9 @@ WorldWindow::draw(void)
     ground.Draw();
     traintrack.Draw();
 	treeObj.Draw();
-	//buildobj.Draw();
+	buildobj.Draw();
 	ferrisWheelObj.Draw();
+	fence.Draw();
 }
 
 

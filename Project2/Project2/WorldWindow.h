@@ -18,6 +18,7 @@
 #include "Tree.h"
 #include "Building.h"
 #include "FerrisWheel.h"
+#include "Fence.h"
 
 
 // Subclass the Fl_Gl_Window because we want to draw OpenGL in here.
@@ -43,6 +44,7 @@ class WorldWindow : public Fl_Gl_Window {
 	Tree treeObj;			// Tree object
 	Building buildobj;		// Building object
 	FerrisWheel ferrisWheelObj;
+	Fence fence;
 
 	static const double FOV_X; // The horizontal field of view.
 

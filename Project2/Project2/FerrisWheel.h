@@ -2,7 +2,31 @@
 #include <Fl/gl.h>
 
 class Seat {
-	//needs a rectangular prism
+public:
+	Seat();
+	void makeRectPrism(int width, int height);
+	void Initialize(float x, float y, float z);
+	void Draw();
+private:
+	GLubyte seatList;
+	GLfloat angle;
+	float initX;
+	float initY;
+	float initZ;
+};
+
+class Spokes {
+public:
+	Spokes();
+	Spokes(float x, float y, float z);
+	//~Spokes();
+	void Initialize();
+	void Draw();
+	void InitSpokePos(int yPos, int zPos);
+private:
+	GLubyte spokesList;
+	Seat seat[12];
+	GLfloat angle;
 };
 
 class Stand {
@@ -14,25 +38,27 @@ public:
 private:
 	//needs total of 5 cylinders: 1 horizontal, 4 slanted
 	GLubyte standList;
+	Spokes spokes;
 };
 
-class Spokes {
-	//make 2 triangle fans, use transform matrix to move them apart, just need the outline of each triangle, has to be able to rotate
+class Sweep {
 public:
-	//Spokes();
-	//~Spokes();
+	//Sweep();
 	void Initialize();
 	void Draw();
 private:
-	GLubyte spokesList;
+	GLubyte list;
+	float prev;
 };
 
 class FerrisWheel {
 public:
+	FerrisWheel();
 	void Initialize();
 	void Draw();
 private:
-	Seat seat;
-	Spokes spokes;
 	Stand stand;
+	float prev;
+	float rotationAngle;
+	Sweep sweep;
 };

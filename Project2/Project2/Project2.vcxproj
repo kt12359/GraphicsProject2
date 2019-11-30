@@ -101,7 +101,9 @@
   <ItemGroup>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CubicBspline.cpp" />
+    <ClCompile Include="Fence.cpp" />
     <ClCompile Include="FerrisWheel.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="GenericException.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -113,7 +115,9 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="CubicBspline.h" />
+    <ClInclude Include="Fence.h" />
     <ClInclude Include="FerrisWheel.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="GenericException.h" />
     <ClInclude Include="Ground.h" />
