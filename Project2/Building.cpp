@@ -3,15 +3,24 @@
 #include <stdio.h>
 #include <GL/glu.h>
 
+Building::~Building(){
+	if(initialized){
+		for(int i = 0; i < 5; ++i){
+			glDeleteLists(roofList[i], 1);
+			glDeleteLists(wallsList[i], 1);
+		}
+	}
+}
+
 bool Building::Initialize(void)
 {
 	float buildingHeight, buildingWidth;
 	buildingWidth = 3.0;
 	buildingHeight = 9.0;
 
-	initialized = readTexture();
+	initialized = texObj.readInTexture("wall.tga",0);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureObj[0]);
+	glBindTexture(GL_TEXTURE_2D, texObj.getTexture(0));//GL_TEXTURE_2D, textureObj[0]);
 	walls = glGenLists(1);
 	for(int i = 0; i < 5; ++i){
 		if(i %2 == 0){
@@ -27,9 +36,9 @@ bool Building::Initialize(void)
 	}
 	glDisable(GL_TEXTURE_2D);
 
-	initialized = readTexture();
+	initialized = texObj.readInTexture("roof.tga",1);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureObj[1]);
+	glBindTexture(GL_TEXTURE_2D, texObj.getTexture(1));
 	roof = glGenLists(1);
 	for(int i = 0; i < 5; ++i){
 		if(i %2 == 0){
@@ -49,72 +58,12 @@ bool Building::Initialize(void)
 	return initialized;
 }
 
-bool Building::readTexture(){
-	 ubyte   *image_data;
-    int	    image_height, image_width;
-    // Load the image for the texture.
-    if ( ! ( image_data = (ubyte*)tga_load("wall.tga", &image_width, &image_height, TGA_TRUECOLOR_24) ) ) {
-		fprintf(stderr, "Building::Initialize: Couldn't load wall.tga\n");
-		return false;
-	}
-
-    // This creates a texture object and binds it, so the next few operations
-    // apply to this texture.
-    glGenTextures(1, &textureObj[0]);
-    glBindTexture(GL_TEXTURE_2D, textureObj[0]);
-
-    // This sets a parameter for how the texture is loaded and interpreted.
-    // basically, it says that the data is packed tightly in the image array.
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    // This sets up the texture with high quality filtering. First it builds
-    // mipmaps from the image data, then it sets the filtering parameters
-    // and the wrapping parameters. We want the grass to be repeated over the
-    // ground.
-    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, GL_RGB, GL_UNSIGNED_BYTE, image_data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-
-    // This says what to do with the texture. Modulate will multiply the
-    // texture by the underlying color.
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
-	glColor3f(1.0, 1.0, 1.0);
-
-	    if ( ! ( image_data = (ubyte*)tga_load("roof.tga", &image_width, &image_height, TGA_TRUECOLOR_24) ) ) {
-		fprintf(stderr, "Building::Initialize: Couldn't load roof.tga\n");
-		return false;
-	}
-
-    glBindTexture(GL_TEXTURE_2D, textureObj[1]);
-
-    // This sets a parameter for how the texture is loaded and interpreted.
-    // basically, it says that the data is packed tightly in the image array.
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    // This sets up the texture with high quality filtering. First it builds
-    // mipmaps from the image data, then it sets the filtering parameters
-    // and the wrapping parameters. We want the grass to be repeated over the
-    // ground.
-    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, GL_RGB, GL_UNSIGNED_BYTE, image_data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-
-    // This says what to do with the texture. Modulate will multiply the
-    // texture by the underlying color.
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
-
-}
-
 bool Building::InitWalls(int buildingWidth, int buildingHeight, int i){
 
 	glNewList(walls+i, GL_COMPILE);
 	glColor3f(1.0, 1.0, 1.0);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureObj[0]);
+	glBindTexture(GL_TEXTURE_2D, texObj.getTexture(0));//textureObj[0]);
 
 		glBegin(GL_QUADS);
 
@@ -173,7 +122,7 @@ bool Building::InitRoof(int buildingWidth, int buildingHeight, int i){
 	glColor3f(1.0, 1.0, 1.0);
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, textureObj[1]);
+	glBindTexture(GL_TEXTURE_2D, texObj.getTexture(1));
 
 
 	glBegin(GL_QUADS);
@@ -199,7 +148,7 @@ void
 Building::Draw(void)
 {
     glPushMatrix();
-	glTranslatef(40.0,35.0,0.0);
+	glTranslatef(40.0,42.0,0.0);
 	for(int i = 0; i < 5; ++i){
 		if(i % 2 == 0)
 			glTranslatef(0.0,0.0,9.0);

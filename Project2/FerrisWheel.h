@@ -1,15 +1,44 @@
 #include <Fl/Fl.h>
 #include <Fl/gl.h>
 
-class Seat {
+class Sweep {
 public:
-	//needs a rectangular prism
-	void makeRectPrism(int width, int height);
+	//Sweep();
+	//~Sweep();
 	void Initialize();
 	void Draw();
+	//void drawFace(float x, float y, float z, float depth);
 private:
-	//GLubyte seatList[12];
+	GLubyte list;
+};
+
+class Seat {
+public:
+	Seat();
+	void makeRectPrism(int width, int height);
+	void Initialize(float x, float y, float z);
+	void Draw();
+private:
 	GLubyte seatList;
+	GLfloat angle;
+	Sweep obj;
+	float initX;
+	float initY;
+	float initZ;
+};
+
+class Spokes {
+public:
+	Spokes();
+	Spokes(float x, float y, float z);
+	//~Spokes();
+	void Initialize();
+	void Draw();
+	void InitSpokePos(int yPos, int zPos);
+private:
+	GLubyte spokesList;
+	Seat seat[12];
+	GLfloat angle;
 };
 
 class Stand {
@@ -21,26 +50,17 @@ public:
 private:
 	//needs total of 5 cylinders: 1 horizontal, 4 slanted
 	GLubyte standList;
-};
-
-class Spokes {
-	//make 2 triangle fans, use transform matrix to move them apart, just need the outline of each triangle, has to be able to rotate
-public:
-	//Spokes();
-	//~Spokes();
-	void Initialize();
-	void Draw();
-private:
-	GLubyte spokesList;
+	Spokes spokes;
 };
 
 class FerrisWheel {
 public:
+	FerrisWheel();
 	void Initialize();
 	void Draw();
 private:
-	Spokes spokes;
 	Stand stand;
-	Seat seat;
 	float prev;
+	float rotationAngle;
+	Sweep sweep;
 };

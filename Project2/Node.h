@@ -13,3 +13,4 @@ protected:
 	void onDraw();
 	vector<Node> children;
 }; //all components in world should be derived from this class - Draw method should call pushmatrix() call onDraw, call children's Draw, pushmatrix() pop..pop. (emulate what is already in worldWindow Draw)
+//class ReadTexture
