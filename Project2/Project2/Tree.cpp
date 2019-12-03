@@ -1,17 +1,11 @@
+#define _USE_MATH_DEFINES
 #include "Tree.h"
 #include <GL/glu.h>
 #include <math.h>
 
-/*Tree::~Tree(){
-	if ( initialized )
-    {
-	glDeleteLists(display_list, 1);
-	glDeleteTextures(1, &texture_obj);
-    }
-}*/
-
 void Tree::Initialize()
 {
+
 	float base = 0.5;
 	float top = 0.5;
 	float height = 4.0;
@@ -44,6 +38,17 @@ void Tree::Draw()
 
 }
 
+Leaves::Leaves(){
+	initialized = false;
+}
+
+Leaves::~Leaves(){
+	if(initialized){
+		for(int i = 0; i < 2; ++i)
+			glDeleteLists(leavesList[i], 1);
+	}
+}
+
 void Leaves::Draw(int i){
 	if(i % 2 == 0)
 		glCallList(leavesList[0]);
@@ -65,32 +70,22 @@ void Leaves::Initialize(float base, float top, float height, float slices, float
 	cone = gluNewQuadric();
 	gluCylinder(cone, base, top, height, slices, stacks);
 	glEndList();
+
 	leavesList[0] = index;
 	leavesList[1] = index + 1;
-/*	index = glGenLists(1);
-	for(int j = 0; j < 2; ++j){
-	glNewList((index+j), GL_COMPILE);
-float M_PI = 3.1459;	
-float radius = base; float halfLength = radius;
-//int slices;
-for(int i=0; i<slices; i++) {
-float theta = ((float)i)*2.0*M_PI;
-float nextTheta = ((float)i+1)*2.0*M_PI;
-glBegin(GL_TRIANGLE_STRIP);
-vertex at middle of end  glVertex3f(0.0, halfLength, 0.0);
-vertices at edges of circle glVertex3f(radius*cos(theta), halfLength, radius*sin(theta));
-                                          glVertex3f (radius*cos(nextTheta), halfLength, radius*sin(nextTheta));
- the same vertices at the bottom of the cylinder
- glVertex3f (radius*cos(nextTheta), -halfLength, radius*sin(nextTheta));
-glVertex3f(radius*cos(theta), -halfLength, radius*sin(theta));
-glVertex3f(0.0, -halfLength, 0.0);
-glEnd();
+	
+	initialized = true;
 }
-glEndList();
+
+Trunk::Trunk(){
+	initialized = false;
+}
+
+Trunk::~Trunk(){
+	if(initialized){
+		for(int i = 0; i < 2; ++i)
+			glDeleteLists(trunkList[i], 1);
 	}
-for(int i = 0; i < 2; ++i){
-leavesList[i] = index+i;
-}*/
 }
 
 void Trunk::Draw(int i)
@@ -118,4 +113,6 @@ void Trunk::Initialize(float base, float top, float height, float slices, float 
 
 	trunkList[0] = index;
 	trunkList[1] = index + 1;
+
+	initialized = true;
 }

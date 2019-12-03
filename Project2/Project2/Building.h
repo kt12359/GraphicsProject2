@@ -3,7 +3,7 @@
 
 class Building {
 public:
-	//Building();
+	Building();
 	~Building();
 	bool Initialize();
 	void Draw();
@@ -12,11 +12,9 @@ public:
 
 private:
 	GLubyte  roofList[5];
-	GLubyte wallsList[5];   // The display list that does all the work.
-    GLuint  textureObj[2];    // The object for the wall texture.
+	GLubyte wallsList[5];
 	GLuint  roof;
 	GLuint  walls;
-	GLuint  textureRoofObj;
     bool    initialized;    // Whether or not texture has been properly applied/initialized
 	Texture texObj;
 };

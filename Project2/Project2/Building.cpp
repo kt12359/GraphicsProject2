@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <GL/glu.h>
 
+Building::Building(){
+	initialized = false;
+}
+
 Building::~Building(){
 	if(initialized){
 		for(int i = 0; i < 5; ++i){

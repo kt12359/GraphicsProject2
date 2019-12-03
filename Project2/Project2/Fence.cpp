@@ -43,8 +43,8 @@ void Fence::Initialize(){
 
 void Fence::Draw(){
 	glPushMatrix();
-	glTranslatef(33.0,3.0,3.0);
-	for(int i = 0; i < 10; ++i){
+	glTranslatef(33.0,5.0,3.0);
+	for(int i = 0; i < 9; ++i){
 		glPushMatrix();
 		//call list
 		glCallList(post);
@@ -99,6 +99,16 @@ void Fence::makeRectPrism(int width, int height){
 	glTexCoord2f(1.0,1.0);
 	glVertex3f( -width, -width, -height );
 
+		//TOP
+	glTexCoord2f(-1.0,1.0);
+	glVertex3f(  width,  width,  height );
+	glTexCoord2f(1.0,-1.0);
+	glVertex3f(  width,  width, -height );
+	glTexCoord2f(-1.0,-1.0);
+	glVertex3f( -width,  width, -height );
+	glTexCoord2f(1.0,1.0);
+	glVertex3f( -width,  width,  height );
+
 	glTexCoord2f(-1.0,1.0);
 	glVertex3f(  width, -width, -height );
 	glTexCoord2f(1.0,-1.0);
@@ -107,6 +117,7 @@ void Fence::makeRectPrism(int width, int height){
 	glVertex3f( -width, -width,  height );
 	glTexCoord2f(1.0,1.0);
 	glVertex3f( -width, -width, -height );
+
 
 	glEnd();
 }
