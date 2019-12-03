@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "Tree.h"
 #include <GL/glu.h>
 #include <math.h>
@@ -12,6 +13,12 @@
 
 void Tree::Initialize()
 {
+	/*GLfloat radius = 1.0;
+	GLfloat x, y, z;
+	x = y = z = 0.0;
+	GLfloat doublePi = M_PI * 2.0f;
+	GLint numSides = 20;
+	GLint numVertices = numSides+2;*/
 	float base = 0.5;
 	float top = 0.5;
 	float height = 4.0;
@@ -22,6 +29,22 @@ void Tree::Initialize()
 	height = 7.0;
 	slices = stacks = 15.0;
 	leavesObj.Initialize(base,top,height,slices,stacks);
+
+	/*glBegin(GL_QUAD_STRIP);
+	glVertex3f(0.0, 0.0, 0.0);
+	for(int i = 1; i < numVertices; ++i){
+		glVertex3f(x + (radius * cos(i * doublePi/numSides)), y + (radius * sin(i*doublePi/numSides)),i);
+	}
+	glEnd();
+
+
+	
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0.0, 0.0, 0.0);
+	for(int i = 1; i < numVertices; ++i){
+		glVertex3f(x - (radius * sin(i * doublePi/numSides)), y - (radius * cos(i*doublePi/numSides)),z);
+	}
+	glEnd();*/
 }
 
 //Draws a tree

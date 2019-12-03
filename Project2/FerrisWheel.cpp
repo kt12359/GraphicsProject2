@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "FerrisWheel.h"
 #include <FL/glut.h>
 #include <GL/glu.h>
@@ -30,64 +31,46 @@ void timer(int val){
 }
 
 void Spokes::Initialize() {
+	GLfloat x, y, z, radius;
+	x = 0; y = 0; z = 0; radius = 14;
+	GLfloat doublePi = M_PI * 2.0f;
+	GLint numSides;
+	numSides = 12;
 	spokesList = glGenLists(1);
-	float yPos, zPos;
-	yPos = zPos = 12.0;
+
 	glNewList(spokesList, GL_COMPILE);
 	glColor3f(0.5,0.5,0.5);
 	glTranslatef(30.0,-25.0,18.0);
 	//make the spokes of the ferris wheel via triangle fan -- these will be rendered as wireframe, so just the outline of the fan
-	InitSpokePos(yPos,zPos);
+	InitSpokePos(x,y,z,radius,numSides);
 	glTranslatef(6.0,0.0,0.0);
-	InitSpokePos(yPos, zPos);
+	//glRotatef(180.0, 1.0, 0.0, 0.0);
+	InitSpokePos(x,y,z,radius,numSides);
 	glEndList();
+
 	glPushMatrix();
-	//initialize seats with starting position(s)
-	seat[0].Initialize(-3.0,0.0,zPos+zPos*(1.0/6.0));
-	seat[1].Initialize(-3.0,yPos*(1.0/2.0),zPos);
-	seat[2].Initialize(-3.0,yPos,zPos*(2.0/3.0));
-	seat[3].Initialize(-3.0,yPos+yPos*(1.0/4.0),zPos*(1.0/6.0));
-	seat[4].Initialize(-3.0,yPos,-zPos*(2.0/3.0));
-	seat[5].Initialize(-3.0,yPos*(1.0/2.0),-zPos);
-	seat[6].Initialize(-3.0,0.0,-zPos-zPos*(1.0/6.0));
-	seat[7].Initialize(-3.0,-yPos*(1.0/2.0),-zPos);
-	seat[8].Initialize(-3.0,-yPos,-zPos*(2.0/3.0));
-	seat[9].Initialize(-3.0,-yPos-yPos*(1.0/4.0),zPos*(1.0/6.0));
-	seat[10].Initialize(-3.0,-yPos,zPos*(2.0/3.0));
-	seat[11].Initialize(-3.0,-yPos*(1.0/2.0),zPos);
+	for(int i = 0; i < 12; ++i){
+		seat[i].Initialize(x, y + (radius * cos(i * doublePi/numSides)), z + (radius * sin(i*doublePi/numSides)));
+	}
 	glPopMatrix();
 }
 
-void Spokes::InitSpokePos(int yPos, int zPos){
+void Spokes::InitSpokePos(int x, int y, int z, int radius, int numSides){
+	GLfloat doublePi = M_PI * 2.0f;
+	GLint numVertices = numSides+2;
+
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0,0.0,zPos+zPos*(1.0/6.0));
-    glVertex3f(0.0,yPos*(1.0/2.0),zPos);
-	glVertex3f(0.0,yPos,zPos*(2.0/3.0));
-    glVertex3f(0.0,yPos+yPos*(1.0/4.0),zPos*(1.0/6.0));
-    glVertex3f(0.0,yPos,-zPos*(2.0/3.0));
-    glVertex3f(0.0,yPos*(1.0/2.0),-zPos);
-    glVertex3f(0.0,0.0,-zPos-zPos*(1.0/6.0));
-	glVertex3f(0.0,-yPos*(1.0/2.0),-zPos);
-    glVertex3f(0.0,-yPos,-zPos*(2.0/3.0));
-	glVertex3f(0.0,-yPos-yPos*(1.0/4.0),zPos*(1.0/6.0));
-	glVertex3f(0.0,-yPos,zPos*(2.0/3.0));
-	glVertex3f(0.0,-yPos*(1.0/2.0),zPos);
-	glVertex3f(0.0,0.0,zPos+zPos*(1.0/6.0));
-	/*glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0,0.0,zPos+zPos*(1.0/6.0));
-    glVertex3f(0.0,yPos*(1.0/3.0),zPos);
-	glVertex3f(0.0,yPos,zPos*(2.0/3.0));
-    glVertex3f(0.0,yPos+yPos*(1.0/6.0),zPos*(1.0/6.0));
-    glVertex3f(0.0,yPos,-zPos*(2.0/3.0));
-    glVertex3f(0.0,yPos*(1.0/3.0),-zPos);
-    glVertex3f(0.0,0.0,-zPos-zPos*(1.0/6.0));
-	glVertex3f(0.0,-yPos*(1.0/3.0),-zPos);
-    glVertex3f(0.0,-yPos,-zPos*(2.0/3.0));
-	glVertex3f(0.0,-yPos-yPos*(1.0/6.0),zPos*(1.0/6.0));
-	glVertex3f(0.0,-yPos,zPos*(2.0/3.0));
-	glVertex3f(0.0,-yPos*(1.0/3.0),zPos);
-	glVertex3f(0.0,0.0,zPos+zPos*(1.0/6.0));*/
+	for(int i = 1; i < numVertices; ++i){
+		glVertex3f(x, y + (radius * cos(i * doublePi/numSides)), z + (radius * sin(i*doublePi/numSides)));
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0.0, 0.0, 0.0);
+	for(int i = 1; i < numVertices; ++i){
+		glVertex3f(x, y - (radius * sin(i * doublePi/numSides)), z - (radius * cos(i*doublePi/numSides)));
+	}
 	glEnd();
 }
 
@@ -101,7 +84,8 @@ void Spokes::Draw(){
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 	glCallList(spokesList);
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-	glTranslatef(0.0,-3.0, 0.0);
+	//glTranslatef(-4.0,-1.0, 3.0);
+	glTranslatef(0.0, 0.0, 0.0);
 	for(int i = 0; i < 12; ++i){
 		seat[i].Draw();
 	}
@@ -110,6 +94,7 @@ void Spokes::Draw(){
 }
 
 void Stand::Initialize(){
+
 	float base, top, height, slices, stacks;
 	base = top = 1.0;
 	height = 10.0;
@@ -134,13 +119,6 @@ void Stand::Initialize(){
 	glTranslatef(17.0,0.0,4.5);
 	glRotatef(-30.0, 0.0, 1.0, 0.0);
 	gluCylinder(quad, base, top, height, slices, stacks);
-	//cylinders provided by opengl are not filled, so adding covers for ends
-	/*float inner, outer, loops;
-	inner = 0.0;
-	outer = 1.0;
-	slices = loops = 10.0;
-	gluDisk(quad,inner,outer,slices,loops);
-	glTranslatef(0.0,8.0,0.0);*/
 	glEndList();
 	glPopMatrix();
 	spokes.Initialize();
@@ -163,8 +141,8 @@ void Seat::Initialize(float x, float y, float z){
 	initZ = z;
 	seatList = glGenLists(1);
 	glNewList(seatList,GL_COMPILE);
-	obj.Initialize();
-	//makeRectPrism(1,2);
+	//obj.Initialize();
+	makeRectPrism(1,2);
 	glEndList();
 
 }
@@ -172,6 +150,7 @@ void Seat::Initialize(float x, float y, float z){
 void Seat::Draw() {
 	glPushMatrix();
 	glTranslatef(initX, initY, initZ);
+	glTranslatef(-3.0, 0.0, 0.0);
 	glRotatef(-angle, 1.0, 0.0, 0.0);
 	glCallList(seatList);
 
@@ -221,12 +200,16 @@ void Seat::makeRectPrism(int height, int width){
 }
 
 void Sweep::Initialize(){
+
+//}
+
+//void Sweep::initParam(float angle){
 	float translate = 0.2;
 	float lowHeight = 2.0;
 	float lowWidth = 3.0;
 	float upperHeight = 3.0;
 	float upperWidth = 1.0;
-	float depth = 3.0;
+	float depth = 5.0;
 	int numEdges = 8;
 
 	list = glGenLists(1);

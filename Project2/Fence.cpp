@@ -99,6 +99,16 @@ void Fence::makeRectPrism(int width, int height){
 	glTexCoord2f(1.0,1.0);
 	glVertex3f( -width, -width, -height );
 
+		//TOP
+	glTexCoord2f(-1.0,1.0);
+	glVertex3f(  width,  width,  height );
+	glTexCoord2f(1.0,-1.0);
+	glVertex3f(  width,  width, -height );
+	glTexCoord2f(-1.0,-1.0);
+	glVertex3f( -width,  width, -height );
+	glTexCoord2f(1.0,1.0);
+	glVertex3f( -width,  width,  height );
+
 	glTexCoord2f(-1.0,1.0);
 	glVertex3f(  width, -width, -height );
 	glTexCoord2f(1.0,-1.0);
@@ -107,6 +117,7 @@ void Fence::makeRectPrism(int width, int height){
 	glVertex3f( -width, -width,  height );
 	glTexCoord2f(1.0,1.0);
 	glVertex3f( -width, -width, -height );
+
 
 	glEnd();
 }

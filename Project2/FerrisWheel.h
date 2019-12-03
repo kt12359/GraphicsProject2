@@ -7,7 +7,7 @@ public:
 	//~Sweep();
 	void Initialize();
 	void Draw();
-	//void drawFace(float x, float y, float z, float depth);
+//	void initParam(float angle);
 private:
 	GLubyte list;
 };
@@ -34,7 +34,7 @@ public:
 	//~Spokes();
 	void Initialize();
 	void Draw();
-	void InitSpokePos(int yPos, int zPos);
+	void InitSpokePos(int x, int y, int z, int radius, int numSides);
 private:
 	GLubyte spokesList;
 	Seat seat[12];
